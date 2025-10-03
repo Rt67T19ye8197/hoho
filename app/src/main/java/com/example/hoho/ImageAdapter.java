@@ -12,12 +12,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.example.hoho.ui.activity.MiniListActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ImageAdapter extends BaseAdapter {
+    //адптер для стартового окна. отвечает за выведение картинок в виде плиток
+    // с кликом перехода на активность
     private final Context context;
-    private final ArrayList<Integer> imgList;
+    private final ArrayList<Integer> list;
 
     public interface OnItemClickListener{
         void OnItemClick(int position);
@@ -25,9 +29,9 @@ public class ImageAdapter extends BaseAdapter {
 
     private OnItemClickListener listener;
 
-    public ImageAdapter(Context context, ArrayList<Integer> imgList){
+    public ImageAdapter(Context context, ArrayList<Integer> list){
         this.context = context;
-        this.imgList = imgList;
+        this.list = list;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -36,12 +40,12 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return imgList.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return imgList.get(position);
+        return list.get(position);
     }
 
     @Override
@@ -68,7 +72,7 @@ public class ImageAdapter extends BaseAdapter {
             Log.d("MyLOG", "not");
         }
 
-        imageView.setImageResource(imgList.get(position));
+        imageView.setImageResource(list.get(position));
         /*
         //обработка клика из активности
         imageView.setOnClickListener(v -> {
@@ -81,7 +85,7 @@ public class ImageAdapter extends BaseAdapter {
         //обрабодка клика прямо тут
         imageView.setOnClickListener(v -> {
             //оброботка нажатия
-            Intent intent = new Intent(context, MainActivity2.class);
+            Intent intent = new Intent(context, MiniListActivity.class);
             context.startActivity(intent);
         });
         return imageView;

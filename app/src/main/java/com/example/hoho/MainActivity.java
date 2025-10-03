@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    //СТАРТОВОЕ ОКНО
 
     private GridView gridView1;
     private GridView gridView2;

@@ -15,6 +15,7 @@ import com.example.hoho.data.repository.ItemRepository;
 import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity {
+    //ОСНОВНОЕ ОКНО С КАРТОЧКАМИ
 
     TextView lvl, world, trans, text, textTrans, textProm;
     View buttonCat, buttonLvl, buttonCheck, buttonLng, buttonPlay, buttonMenu;
@@ -43,9 +44,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         //////DATA\\\\\\
         ItemRepository repository = new ItemRepository(this);
-        // Получаем одну запись по id
-        Item item = repository.getItem(3);
-
+        Item item = (Item) repository.search("ddd", "ddd");
         //Item tr = repository.search("ffdgf", DatabaseContract.Item.COLUMN_WORLD);
 
         //////TEXT\\\\\\
@@ -64,6 +63,8 @@ public class MainActivity2 extends AppCompatActivity {
             buttonCheck.setBackgroundResource(resDrawable("check"));
         }
 
+        buttonCat.setOnClickListener((v -> onClick("nnnn")));
+
     }
 
     Item data(){
@@ -76,7 +77,7 @@ public class MainActivity2 extends AppCompatActivity {
         }
 
         // Получаем одну запись по id
-        Item singleItem = repository.getItem(3);
+        Item singleItem = (Item) repository.search("ddd", "ddd");
         if (singleItem != null) {
             Log.d("DB", "Поиск по ID=3: " + singleItem.getLng() + " | flag = ");
         } else {
@@ -96,6 +97,11 @@ public class MainActivity2 extends AppCompatActivity {
             imageView.setImageResource(R.drawable.house);
         }
     }
+
+    public void onClick(String number){
+
+    }
+
     int resDrawable(String imageName){
         int resId = getResources().getIdentifier(imageName, "drawable", getPackageName());
         // Проверяем, найден ли ресурс

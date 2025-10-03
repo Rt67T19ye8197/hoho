@@ -13,6 +13,20 @@ public class Item {
     private String textTrans;
     private String textPron;
 
+    public Item(String world, String trans){
+        this.world = world;
+        this.trans = trans;
+    }
+
+    public Item(int id, String lng, String lvl, boolean check, String world, String trans){
+        this.id = id;
+        this.lng = lng;
+        this.lvl = lvl;
+        this.check = check;
+        this.world = world;
+        this.trans = trans;
+    }
+
     public Item(int id, String lng, String lvl, String article, boolean check, String world, String trans, String pron,
                 String text, String textTrans, String textPron){
         this.id = id;
