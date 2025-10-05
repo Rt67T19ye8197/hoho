@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.example.hoho.ui.activity.MiniListActivity;
+import com.example.hoho.ui.entitiles.IntAndString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class ImageAdapter extends BaseAdapter {
     //адптер для стартового окна. отвечает за выведение картинок в виде плиток
     // с кликом перехода на активность
     private final Context context;
-    private final ArrayList<Integer> list;
+    private final ArrayList<IntAndString> list;
 
     public interface OnItemClickListener{
         void OnItemClick(int position);
@@ -29,7 +30,7 @@ public class ImageAdapter extends BaseAdapter {
 
     private OnItemClickListener listener;
 
-    public ImageAdapter(Context context, ArrayList<Integer> list){
+    public ImageAdapter(Context context, ArrayList<IntAndString> list){
         this.context = context;
         this.list = list;
     }
@@ -72,20 +73,19 @@ public class ImageAdapter extends BaseAdapter {
             Log.d("MyLOG", "not");
         }
 
-        imageView.setImageResource(list.get(position));
-        /*
-        //обработка клика из активности
-        imageView.setOnClickListener(v -> {
-            if(listener != null){
-                listener.OnItemClick(position);
-            }
-        });
-         */
+        IntAndString item = list.get(position);
+        if (item != null) {
+            imageView.setImageResource(item.getIdDrawable() != null ? item.getIdDrawable() : R.drawable.house);
+        } else {
+            imageView.setImageResource(R.drawable.house);
+        }
 
-        //обрабодка клика прямо тут
+        //CLICK
         imageView.setOnClickListener(v -> {
-            //оброботка нажатия
             Intent intent = new Intent(context, MiniListActivity.class);
+            if (item.getTeg() != null & item.getTeg().isEmpty()) {
+                intent.putExtra("TEG", item.getTeg());
+            }
             context.startActivity(intent);
         });
         return imageView;

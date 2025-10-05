@@ -40,17 +40,11 @@ public class MiniListAdapter extends ArrayAdapter<Item> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if (position >= 0 && position < list.size()) {
-            Item item = list.get(position);
-
-            // Безопасная установка текста
-            if (item != null) {
-                viewHolder.textView1.setText(item.getWorld() != null ? item.getWorld() : "");
-                viewHolder.textView2.setText(item.getTrans() != null ? item.getTrans() : "");
-            } else {
-                viewHolder.textView1.setText("");
-                viewHolder.textView2.setText("");
-            }
+        Item item = list.get(position);
+        // Безопасная установка текста
+        if (item != null) {
+            viewHolder.textView1.setText(item.getWorld() != null ? item.getWorld() : "");
+            viewHolder.textView2.setText(item.getTrans() != null ? item.getTrans() : "");
         } else {
             viewHolder.textView1.setText("");
             viewHolder.textView2.setText("");

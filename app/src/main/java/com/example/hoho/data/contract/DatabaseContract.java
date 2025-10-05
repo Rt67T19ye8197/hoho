@@ -14,7 +14,8 @@ public enum DatabaseContract {
     PROM("prom"),
     TEXT("text"),
     TEXT_TRANS("textTrans"),
-    TEXT_PRON("textPron");
+    TEXT_PRON("textPron"),
+    TEG("teg");
 
     private final String columnName;
 

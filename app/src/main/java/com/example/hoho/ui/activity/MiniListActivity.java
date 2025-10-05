@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.hoho.R;
+import com.example.hoho.data.contract.DatabaseContract;
 import com.example.hoho.data.entities.Item;
 import com.example.hoho.data.repository.ItemRepository;
 import com.example.hoho.ui.adapter.MiniListAdapter;
@@ -30,8 +31,12 @@ public class MiniListActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_mini_list);
         windowPadding();
+        Bundle arguments = getIntent().getExtras();
+        String teg = arguments.get("TEG").toString();
         // начальная инициализация списка
-        setInitialData();
+        //setInitialData();
+        ItemRepository repository = new ItemRepository(this);
+        items = (ArrayList<Item>) repository.search(DatabaseContract.TEG, teg);
         // получаем элемент ListView
         countriesList = findViewById(R.id.list);
         // создаем адаптер
