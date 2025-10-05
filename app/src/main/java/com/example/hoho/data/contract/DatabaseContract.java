@@ -20,15 +20,4 @@ public final class DatabaseContract {
         public static final String COLUMN_TEXT_TRANS = "textTrans";
         public static final String COLUMN_TEXT_PRON = "textPron";
     }
-    public enum TEG {
-
-        SUNDAY,
-        MONDAY,
-        TUESDAY,
-        WEDNESDAY,
-        THURSDAY,
-        FRIDAY,
-        SATURDAY
-    }
-
 }

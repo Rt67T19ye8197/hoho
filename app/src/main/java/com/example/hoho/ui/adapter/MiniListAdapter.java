@@ -24,6 +24,7 @@ public class MiniListAdapter extends ArrayAdapter<Item> {
         super(context, resource, list);
         this.context = context;
         this.list = list;
+        this.layout=resource;
         this.inflater = LayoutInflater.from(context);
     }
 
@@ -39,10 +40,21 @@ public class MiniListAdapter extends ArrayAdapter<Item> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Item item = list.get(position);
+        if (position >= 0 && position < list.size()) {
+            Item item = list.get(position);
 
-        viewHolder.textView1.setText(item.getWorld());
-        viewHolder.textView2.setText(item.getTrans());
+            // Безопасная установка текста
+            if (item != null) {
+                viewHolder.textView1.setText(item.getWorld() != null ? item.getWorld() : "");
+                viewHolder.textView2.setText(item.getTrans() != null ? item.getTrans() : "");
+            } else {
+                viewHolder.textView1.setText("");
+                viewHolder.textView2.setText("");
+            }
+        } else {
+            viewHolder.textView1.setText("");
+            viewHolder.textView2.setText("");
+        }
 
         return convertView;
     }
@@ -52,6 +64,9 @@ public class MiniListAdapter extends ArrayAdapter<Item> {
         ViewHolder(View view){
             textView1 = view.findViewById(R.id.textView1);
             textView2 = view.findViewById(R.id.textView2);
+            if (textView1 == null || textView2 == null) {
+                throw new IllegalStateException("TextView not found in layout");
+            }
         }
     }
 

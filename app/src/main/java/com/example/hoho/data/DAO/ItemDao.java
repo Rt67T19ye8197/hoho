@@ -36,30 +36,8 @@ public class ItemDao {
         return list;
     }
 
-    // поиск по имени
+    // Поиск по одному условию
     public List<Item> searchItems(String query, String selection) {
-        List<Item> list = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        Cursor cursor = db.query(
-                "EN",
-                null,
-                selection + " = ?",
-                new String[]{"%" + query + "%"},
-                null,
-                null,
-                null
-        );
-
-        while (cursor.moveToNext()) {
-            list.add(parseItem(cursor));
-        }
-        cursor.close();
-        db.close();
-        return list;
-    }
-
-    public List<Item> searchItems(DatabaseContract.Item selection, String query) {
         List<Item> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 

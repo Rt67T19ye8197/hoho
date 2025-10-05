@@ -22,12 +22,7 @@ public class ItemRepository {
     /*public Item getItem(int id) {
         return itemDao.getItemById(id);
     }*/
-
-    public List<Item> search(String query, String selection) {
-        return itemDao.searchItems(query, selection);
-    }
-
     public List<Item> search(DatabaseContract.Item selection, String query) {
-        return itemDao.searchItems(selection, query);
+        return itemDao.searchItems(selection.toString(), query);
     }
 }

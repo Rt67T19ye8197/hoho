@@ -14,13 +14,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.hoho.R;
 import com.example.hoho.data.entities.Item;
+import com.example.hoho.data.repository.ItemRepository;
 import com.example.hoho.ui.adapter.MiniListAdapter;
 
 import java.util.ArrayList;
 
 public class MiniListActivity extends AppCompatActivity {
 
-    ArrayList<Item> items = new ArrayList<Item>();
+    ArrayList<Item> items;
     ListView countriesList;
 
     @Override
@@ -52,6 +53,8 @@ public class MiniListActivity extends AppCompatActivity {
     }
 
     private void setInitialData(){
+        ItemRepository repository = new ItemRepository(this);
+        items = (ArrayList<Item>) repository.getItems();
         items.add(new Item ("Бразилия", "Бразилиа"));
         items.add(new Item ("Аргентина", "Буэнос-Айрес"));
         items.add(new Item ("Колумбия", "Богота"));
