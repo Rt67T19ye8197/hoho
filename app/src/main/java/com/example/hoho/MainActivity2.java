@@ -44,8 +44,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         //////DATA\\\\\\
         ItemRepository repository = new ItemRepository(this);
-        Item item = (Item) repository.search("ddd", DatabaseContract.Item.COLUMN_WORLD);
-        //Item tr = repository.search("ffdgf", DatabaseContract.Item.COLUMN_WORLD);
+        Item item = (Item) repository.search(DatabaseContract.WORLD,"ddd");
 
         //////TEXT\\\\\\
         assert item != null;
@@ -77,7 +76,7 @@ public class MainActivity2 extends AppCompatActivity {
         }
 
         // Получаем одну запись по id
-        Item singleItem = (Item) repository.search("ddd", DatabaseContract.Item.COLUMN_WORLD);
+        Item singleItem = (Item) repository.search(DatabaseContract.WORLD,"ddd" );
         if (singleItem != null) {
             Log.d("DB", "Поиск по ID=3: " + singleItem.getLng() + " | flag = ");
         } else {

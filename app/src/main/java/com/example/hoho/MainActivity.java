@@ -25,17 +25,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     //СТАРТОВОЕ ОКНО
 
-    private GridView gridView1;
-    private GridView gridView2;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        gridView1 = findViewById(R.id.grid1);
-        gridView2 = findViewById(R.id.grid2);
+        GridView gridView1 = findViewById(R.id.grid1);
+        GridView gridView2 = findViewById(R.id.grid2);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

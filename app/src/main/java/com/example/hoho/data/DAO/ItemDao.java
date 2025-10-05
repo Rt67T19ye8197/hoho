@@ -26,8 +26,8 @@ public class ItemDao {
         Cursor cursor = db.query("EN", null, null, null, null, null, null);
 
         while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Item.COLUMN_ID));
-            String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Item.COLUMN_LVL));
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.ID.getColumnName()));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.LVL.getColumnName()));
             //boolean flag = cursor.getInt(cursor.getColumnIndexOrThrow("flag")) == 1;
             list.add(new Item(id, name));
         }
@@ -37,7 +37,7 @@ public class ItemDao {
     }
 
     // Поиск по одному условию
-    public List<Item> searchItems(String query, String selection) {
+    public List<Item> searchItems(DatabaseContract selection, String query) {
         List<Item> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -76,7 +76,7 @@ public class ItemDao {
                 whereClause.append(" AND ");
             }
             // для текстовых полей используем LIKE, для числовых - "="
-            if (entry.getKey().equals(DatabaseContract.Item.COLUMN_CHECK)) {
+            if (entry.getKey().equals(DatabaseContract.CHECK.getColumnName())) {
                 whereClause.append(entry.getKey()).append(" = ?");
                 whereArgsList.add(entry.getValue());
             } else {
@@ -107,12 +107,12 @@ public class ItemDao {
 
     // Парсинг объекта из курсора
     private Item parseItem(Cursor cursor) {
-        int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Item.COLUMN_ID));
-        String lng = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Item.COLUMN_LNG));
-        String lvl = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Item.COLUMN_LVL));
-        String article = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Item.COLUMN_ARTICLE));
-        String world = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Item.COLUMN_WORLD));
-        String trans = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Item.COLUMN_TRANS));
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.ID.getColumnName()));
+        String lng = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.LNG.getColumnName()));
+        String lvl = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.LVL.getColumnName()));
+        String article = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.ARTICLE.getColumnName()));
+        String world = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.WORLD.getColumnName()));
+        String trans = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TRANS.getColumnName()));
         return new Item(id, lng, lvl, article, world, trans);
     }
 }

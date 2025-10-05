@@ -9,7 +9,7 @@ import com.example.hoho.data.entities.Item;
 import java.util.List;
 
 public class ItemRepository {
-    private ItemDao itemDao;
+    private final ItemDao itemDao;
 
     public ItemRepository(Context context) {
         itemDao = new ItemDao(context);
@@ -22,7 +22,7 @@ public class ItemRepository {
     /*public Item getItem(int id) {
         return itemDao.getItemById(id);
     }*/
-    public List<Item> search(DatabaseContract.Item selection, String query) {
-        return itemDao.searchItems(selection.toString(), query);
+    public List<Item> search(DatabaseContract selection, String query) {
+        return itemDao.searchItems(selection, query);
     }
 }

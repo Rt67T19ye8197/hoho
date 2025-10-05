@@ -2,22 +2,28 @@ package com.example.hoho.data.contract;
 
 import android.provider.BaseColumns;
 
-public final class DatabaseContract {
-    private DatabaseContract() {}
-    public static final String TABLE_NAME = "EN";
-    public static class Item implements BaseColumns {
+public enum DatabaseContract {
 
-        public static final String COLUMN_ID = "id";
-        public static final String COLUMN_TEG = "teg";
-        public static final String COLUMN_LNG = "lng";
-        public static final String COLUMN_LVL = "lvl";
-        public static final String COLUMN_ARTICLE = "article";
-        public static final String COLUMN_CHECK = "check";
-        public static final String COLUMN_WORLD = "world";
-        public static final String COLUMN_TRANS = "trans";
-        public static final String COLUMN_PROM = "prom";
-        public static final String COLUMN_TEXT = "text";
-        public static final String COLUMN_TEXT_TRANS = "textTrans";
-        public static final String COLUMN_TEXT_PRON = "textPron";
+    ID("id"),
+    LNG("lng"),
+    LVL("lvl"),
+    ARTICLE("article"),
+    CHECK("check"),
+    WORLD("world"),
+    TRANS("trans"),
+    PROM("prom"),
+    TEXT("text"),
+    TEXT_TRANS("textTrans"),
+    TEXT_PRON("textPron");
+
+    private final String columnName;
+
+    DatabaseContract(String columnName) {
+        this.columnName = columnName;
     }
+
+    public String getColumnName() {
+        return columnName;
+    }
+    public static final String TABLE_NAME = "EN";
 }
