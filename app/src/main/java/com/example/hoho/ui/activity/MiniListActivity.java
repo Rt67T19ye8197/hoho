@@ -1,5 +1,7 @@
 package com.example.hoho.ui.activity;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -7,11 +9,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.hoho.MainActivity;
+import com.example.hoho.MainActivity2;
 import com.example.hoho.R;
 import com.example.hoho.data.contract.DatabaseContract;
 import com.example.hoho.data.entities.Item;
@@ -21,9 +26,7 @@ import com.example.hoho.ui.adapter.MiniListAdapter;
 import java.util.ArrayList;
 
 public class MiniListActivity extends AppCompatActivity {
-
     ArrayList<Item> items;
-    ListView countriesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,23 +41,27 @@ public class MiniListActivity extends AppCompatActivity {
         ItemRepository repository = new ItemRepository(this);
         items = (ArrayList<Item>) repository.search(DatabaseContract.TEG, teg);
         // получаем элемент ListView
-        countriesList = findViewById(R.id.list);
+        ListView countriesList = findViewById(R.id.list);
         // создаем адаптер
         MiniListAdapter stateAdapter = new MiniListAdapter(this, R.layout.grid_mini_list, items);
         // устанавливаем адаптер
         countriesList.setAdapter(stateAdapter);
+        AdapterView.OnItemClickListener itemListener = getOnItemClickListener();
+        countriesList.setOnItemClickListener(itemListener);
+    }
+
+    private AdapterView.OnItemClickListener getOnItemClickListener() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity2.class);
         // слушатель выбора в списке
         AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-                // получаем выбранный пункт
                 Item item = (Item) parent.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(), "Был выбран пункт " + item.getWorld(),
-                        Toast.LENGTH_SHORT).show();
+                intent.putExtra("TEG", item.getTeg());
+                startActivity(intent);
             }
         };
-        countriesList.setOnItemClickListener(itemListener);
+        return itemListener;
     }
 
     private void setInitialData(){

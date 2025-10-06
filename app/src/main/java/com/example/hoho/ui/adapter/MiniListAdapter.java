@@ -1,6 +1,10 @@
 package com.example.hoho.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +13,18 @@ import android.widget.TextView;
 
 import com.example.hoho.R;
 import com.example.hoho.data.entities.Item;
+import com.example.hoho.utils.UsingText;
 
 import java.util.ArrayList;
 
 public class MiniListAdapter extends ArrayAdapter<Item> {
-    //адаптор для вывода большлго списка
-    //!!!требует оптимитизации
-    private LayoutInflater inflater;
-    private int layout;
-    private final Context context;
+    //адаптор для вывода большого списка
+    private final LayoutInflater inflater;
+    private final int layout;
     private final ArrayList<Item> list;
 
     public MiniListAdapter(Context context, int resource, ArrayList<Item> list) {
         super(context, resource, list);
-        this.context = context;
         this.list = list;
         this.layout=resource;
         this.inflater = LayoutInflater.from(context);
@@ -42,17 +44,22 @@ public class MiniListAdapter extends ArrayAdapter<Item> {
 
         Item item = list.get(position);
         // Безопасная установка текста
-        if (item != null) {
-            viewHolder.textView1.setText(item.getWorld() != null ? item.getWorld() : "");
+        if (item != null & item.getWorld() != null & item.getTrans() != null) {
+            String[] texts = {item.getWorld(), item.getLvl(), item.getLng()};
+            int[] colors = {Color.RED, Color.GREEN, Color.BLUE};
+            UsingText.setColoredText(viewHolder.textView1, texts, colors);
             viewHolder.textView2.setText(item.getTrans() != null ? item.getTrans() : "");
         } else {
             viewHolder.textView1.setText("");
             viewHolder.textView2.setText("");
         }
 
+        String[] texts = {item.getWorld(), item.getLvl(), item.getLng()};
+        int[] colors = {Color.RED, Color.GREEN, Color.BLUE};
+        UsingText.setColoredText(viewHolder.textView1, texts, colors);
+
         return convertView;
     }
-
     private static class ViewHolder {
         final TextView textView1, textView2;
         ViewHolder(View view){
@@ -63,5 +70,4 @@ public class MiniListAdapter extends ArrayAdapter<Item> {
             }
         }
     }
-
 }

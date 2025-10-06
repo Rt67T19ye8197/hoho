@@ -12,6 +12,7 @@ public class Item {
     private String text;
     private String textTrans;
     private String textPron;
+    private String teg;
 
     public Item(String world, String trans){
         this.world = world;
@@ -146,5 +147,13 @@ public class Item {
 
     public String getLLA() {
         return lng + "," + lvl + "," + article;
+    }
+
+    public String getTeg() {
+        return teg;
+    }
+
+    public void setTeg(String teg) {
+        this.teg = teg;
     }
 }
