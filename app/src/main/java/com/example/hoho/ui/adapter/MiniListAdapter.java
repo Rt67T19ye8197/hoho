@@ -8,9 +8,11 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.hoho.ImageAdapter;
 import com.example.hoho.R;
 import com.example.hoho.data.entities.Item;
 import com.example.hoho.utils.UsingText;

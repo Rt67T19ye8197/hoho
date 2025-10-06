@@ -34,17 +34,19 @@ public class MiniListActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_mini_list);
         windowPadding();
+
+        //////TEG\\\\\\
         Bundle arguments = getIntent().getExtras();
-        String teg = arguments.get("TEG").toString();
+        String teg = arguments.getString("TEG");
+
+        //////LIST\\\\\\
         // начальная инициализация списка
-        //setInitialData();
         ItemRepository repository = new ItemRepository(this);
         items = (ArrayList<Item>) repository.search(DatabaseContract.TEG, teg);
-        // получаем элемент ListView
-        ListView countriesList = findViewById(R.id.list);
-        // создаем адаптер
+
+        //////ADAPTER\\\\\\
         MiniListAdapter stateAdapter = new MiniListAdapter(this, R.layout.grid_mini_list, items);
-        // устанавливаем адаптер
+        ListView countriesList = findViewById(R.id.list);
         countriesList.setAdapter(stateAdapter);
         AdapterView.OnItemClickListener itemListener = getOnItemClickListener();
         countriesList.setOnItemClickListener(itemListener);
@@ -57,7 +59,7 @@ public class MiniListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Item item = (Item) parent.getItemAtPosition(position);
-                intent.putExtra("TEG", item.getTeg());
+                intent.putExtra("QUERY", item.getTeg());
                 startActivity(intent);
             }
         };

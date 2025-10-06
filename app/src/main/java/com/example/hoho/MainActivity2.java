@@ -7,6 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.example.hoho.data.contract.DatabaseContract;
 import com.example.hoho.data.entities.Item;
@@ -25,6 +28,7 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        windowPadding();
 
         lvl = findViewById(R.id.textView);
         world = findViewById(R.id.textView2);
@@ -42,9 +46,13 @@ public class MainActivity2 extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
 
+        //////TEG\\\\\\
+        Bundle arguments = getIntent().getExtras();
+        String query = arguments.getString("QUERY");
+
         //////DATA\\\\\\
         ItemRepository repository = new ItemRepository(this);
-        Item item = (Item) repository.search(DatabaseContract.WORLD,"ddd");
+        Item item = (Item) repository.search(DatabaseContract.WORLD,query);
 
         //////TEXT\\\\\\
         assert item != null;
@@ -112,5 +120,11 @@ public class MainActivity2 extends AppCompatActivity {
         }
     }
 
-
+    private void windowPadding(){
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+    }
 }
