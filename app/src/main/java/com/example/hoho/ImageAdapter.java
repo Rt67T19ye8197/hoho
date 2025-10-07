@@ -83,9 +83,8 @@ public class ImageAdapter extends BaseAdapter {
         //CLICK
         imageView.setOnClickListener(v -> {
             Intent intent = new Intent(context, MiniListActivity.class);
-            if (item.getTeg() != null & item.getTeg().isEmpty()) {
-                intent.putExtra("TEG", item.getTeg());
-            }
+            if (item.getTeg() != null) intent.putExtra("TEG", item.getTeg());
+            else intent.putExtra("TEG", "home");
             context.startActivity(intent);
         });
         return imageView;

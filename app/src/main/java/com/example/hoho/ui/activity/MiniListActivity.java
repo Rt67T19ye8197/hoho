@@ -3,6 +3,7 @@ package com.example.hoho.ui.activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -38,11 +39,12 @@ public class MiniListActivity extends AppCompatActivity {
         //////TEG\\\\\\
         Bundle arguments = getIntent().getExtras();
         String teg = arguments.getString("TEG");
-
+        Log.d("MyLOG", "TEG: " + teg);
         //////LIST\\\\\\
         // начальная инициализация списка
         ItemRepository repository = new ItemRepository(this);
         items = (ArrayList<Item>) repository.search(DatabaseContract.TEG, teg);
+        //setInitialData();
 
         //////ADAPTER\\\\\\
         MiniListAdapter stateAdapter = new MiniListAdapter(this, R.layout.grid_mini_list, items);
@@ -59,7 +61,7 @@ public class MiniListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Item item = (Item) parent.getItemAtPosition(position);
-                intent.putExtra("QUERY", item.getTeg());
+                intent.putExtra("QUERY", item.getWorld());
                 startActivity(intent);
             }
         };
@@ -69,11 +71,11 @@ public class MiniListActivity extends AppCompatActivity {
     private void setInitialData(){
         ItemRepository repository = new ItemRepository(this);
         items = (ArrayList<Item>) repository.getItems();
-        items.add(new Item ("Бразилия", "Бразилиа"));
+        /*items.add(new Item ("Бразилия", "Бразилиа"));
         items.add(new Item ("Аргентина", "Буэнос-Айрес"));
         items.add(new Item ("Колумбия", "Богота"));
         items.add(new Item ("Уругвай", "Монтевидео"));
-        items.add(new Item ("Чили", "Сантьяго"));
+        items.add(new Item ("Чили", "Сантьяго"));*/
     }
 
     private void windowPadding(){

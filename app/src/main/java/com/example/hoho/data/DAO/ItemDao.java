@@ -3,6 +3,7 @@ package com.example.hoho.data.DAO;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.hoho.data.contract.DatabaseContract;
 import com.example.hoho.data.db.AppDatabaseHelper;
@@ -22,41 +23,30 @@ public class ItemDao {
 
     public List<Item> getAllItems() {
         List<Item> list = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query("EN", null, null, null, null, null, null);
 
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.ID.getColumnName()));
-            String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.LVL.getColumnName()));
-            //boolean flag = cursor.getInt(cursor.getColumnIndexOrThrow("flag")) == 1;
-            list.add(new Item(id, name));
+        try (SQLiteDatabase db = dbHelper.getReadableDatabase();
+             Cursor cursor = db.query(DatabaseContract.TABLE_NAME, null, null, null, null, null, null)) {
+
+            while (cursor.moveToNext()) {
+                list.add(parseItem(cursor));
+            }
         }
-        cursor.close();
-        db.close();
-        return list;
+        return  list;
     }
 
     // Поиск по одному условию
     public List<Item> searchItems(DatabaseContract selection, String query) {
         List<Item> list = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.query(
-                "EN",
-                null,
-                selection + " = ?",
-                new String[]{"%" + query + "%"},
-                null,
-                null,
-                null
-        );
+        try (SQLiteDatabase db = dbHelper.getReadableDatabase();
+             Cursor cursor = db.query(DatabaseContract.TABLE_NAME, null, selection + " like ?",
+                     new String[]{"%" + query + "%"}, null, null, null)) {
 
-        while (cursor.moveToNext()) {
-            list.add(parseItem(cursor));
+            while (cursor.moveToNext()) {
+                list.add(parseItem(cursor));
+            }
         }
-        cursor.close();
-        db.close();
-        return list;
+        return  list;
     }
 
     /**
@@ -64,9 +54,6 @@ public class ItemDao {
      * Пример: filters.put("name", "cat"); filters.put("flag", "1");
      */
     public List<Item> searchItems(Map<String, String> filters) {
-        List<Item> list = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
         // Собираем WHERE-условие
         StringBuilder whereClause = new StringBuilder();
         List<String> whereArgsList = new ArrayList<>();
@@ -87,32 +74,33 @@ public class ItemDao {
 
         String[] whereArgs = whereArgsList.toArray(new String[0]);
 
-        Cursor cursor = db.query(
-                DatabaseContract.TABLE_NAME,
-                null,
-                whereClause.length() > 0 ? whereClause.toString() : null,
-                whereArgs,
-                null,
-                null,
-                null
-        );
+        List<Item> list = new ArrayList<>();
+        try (SQLiteDatabase db = dbHelper.getReadableDatabase();
+             Cursor cursor = db.query( DatabaseContract.TABLE_NAME, null, whereClause.length() > 0 ? whereClause.toString() : null,
+                     whereArgs, null, null, null)) {
 
-        while (cursor.moveToNext()) {
-            list.add(parseItem(cursor));
+            while (cursor.moveToNext()) {
+                list.add(parseItem(cursor));
+            }
         }
-        cursor.close();
-        db.close();
-        return list;
+        return  list;
     }
 
     // Парсинг объекта из курсора
     private Item parseItem(Cursor cursor) {
-        int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.ID.getColumnName()));
-        String lng = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.LNG.getColumnName()));
-        String lvl = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.LVL.getColumnName()));
-        String article = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.ARTICLE.getColumnName()));
-        String world = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.WORLD.getColumnName()));
-        String trans = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TRANS.getColumnName()));
-        return new Item(id, lng, lvl, article, world, trans);
+        return new Item(
+                cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.ID.getColumnName())),
+                cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.LNG.getColumnName())),
+                cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.LVL.getColumnName())),
+                cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.ARTICLE.getColumnName())),
+                true,
+                cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.WORLD.getColumnName())),
+                cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TRANS.getColumnName())),
+                cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.PROM.getColumnName())),
+                cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TEXT.getColumnName())),
+                cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TEXT_TRANS.getColumnName())),
+                cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TEXT_PRON.getColumnName())),
+                cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TEG.getColumnName()))
+        );
     }
 }

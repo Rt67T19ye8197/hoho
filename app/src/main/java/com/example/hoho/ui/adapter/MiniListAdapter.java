@@ -46,19 +46,15 @@ public class MiniListAdapter extends ArrayAdapter<Item> {
 
         Item item = list.get(position);
         // Безопасная установка текста
-        if (item != null & item.getWorld() != null & item.getTrans() != null) {
-            String[] texts = {item.getWorld(), item.getLvl(), item.getLng()};
+        if (item != null) {
+            String[] texts = {item.getWorld() + " ", item.getLvl() + " ", item.getLng()};
             int[] colors = {Color.RED, Color.GREEN, Color.BLUE};
             UsingText.setColoredText(viewHolder.textView1, texts, colors);
             viewHolder.textView2.setText(item.getTrans() != null ? item.getTrans() : "");
         } else {
-            viewHolder.textView1.setText("");
-            viewHolder.textView2.setText("");
+            viewHolder.textView1.setText("Null");
+            viewHolder.textView2.setText("Null");
         }
-
-        String[] texts = {item.getWorld(), item.getLvl(), item.getLng()};
-        int[] colors = {Color.RED, Color.GREEN, Color.BLUE};
-        UsingText.setColoredText(viewHolder.textView1, texts, colors);
 
         return convertView;
     }

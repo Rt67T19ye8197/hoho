@@ -14,22 +14,8 @@ public class Item {
     private String textPron;
     private String teg;
 
-    public Item(String world, String trans){
-        this.world = world;
-        this.trans = trans;
-    }
-
-    public Item(int id, String lng, String lvl, boolean check, String world, String trans){
-        this.id = id;
-        this.lng = lng;
-        this.lvl = lvl;
-        this.check = check;
-        this.world = world;
-        this.trans = trans;
-    }
-
     public Item(int id, String lng, String lvl, String article, boolean check, String world, String trans, String pron,
-                String text, String textTrans, String textPron){
+                String text, String textTrans, String textPron, String teg){
         this.id = id;
         this.lng = lng;
         this.lvl = lvl;
@@ -41,22 +27,9 @@ public class Item {
         this.text = text;
         this.textTrans = textTrans;
         this.textPron = textPron;
+        this.teg = teg;
     }
 
-    public Item(int id, String lng){
-        this.id = id;
-        this.lng = lng;
-    }
-
-    public Item(int id, String lng, String lvl, String article, String world, String trans){
-
-        this.id = id;
-        this.lng = lng;
-        this.lvl = lvl;
-        this.article = article;
-        this.world = world;
-        this.trans = trans;
-    }
     public boolean isCheck() {
         return check;
     }

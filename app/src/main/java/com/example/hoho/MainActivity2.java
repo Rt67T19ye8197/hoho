@@ -52,13 +52,18 @@ public class MainActivity2 extends AppCompatActivity {
 
         //////DATA\\\\\\
         ItemRepository repository = new ItemRepository(this);
-        Item item = (Item) repository.search(DatabaseContract.WORLD,query);
+        List<Item> list = repository.search(DatabaseContract.WORLD, query);
+        Item item = list.get(0);
+        Log.d("MyLOG", "DATA" + list.size());
+        Log.d("MyLOG", "TEXT" + query);
+        /// СПАТЬ охото влепил костыль
 
         //////TEXT\\\\\\
         assert item != null;
         lvl.setText(item.getLLA());
         world.setText(item.getWorld());
         trans.setText(item.getTrans());
+        Log.d("MyLOG", "TEXT");
 
         //////IMAGE\\\\\\
         //resDrawable(item.getWorld(), imageView);
@@ -66,12 +71,13 @@ public class MainActivity2 extends AppCompatActivity {
         buttonCat.setBackgroundResource(resDrawable(item.getWorld()));
         buttonLvl.setBackgroundResource(resDrawable(item.getWorld()));
         buttonLng.setBackgroundResource(resDrawable(item.getWorld()));
+        Log.d("MyLOG", "TEXT");
         if(item.isCheck()){
             buttonCheck.setBackgroundResource(resDrawable("check"));
         }
-
+        Log.d("MyLOG", "TEXT");
         buttonCat.setOnClickListener((v -> onClick("nnnn")));
-
+        Log.d("MyLOG", "TEXT");
     }
 
     Item data(){
