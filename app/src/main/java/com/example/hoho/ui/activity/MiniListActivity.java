@@ -68,15 +68,11 @@ public class MiniListActivity extends AppCompatActivity {
         return itemListener;
     }
 
-    private void setInitialData(){
+/*    private void setInitialData(){
         ItemRepository repository = new ItemRepository(this);
         items = (ArrayList<Item>) repository.getItems();
-        /*items.add(new Item ("Бразилия", "Бразилиа"));
-        items.add(new Item ("Аргентина", "Буэнос-Айрес"));
-        items.add(new Item ("Колумбия", "Богота"));
-        items.add(new Item ("Уругвай", "Монтевидео"));
-        items.add(new Item ("Чили", "Сантьяго"));*/
-    }
+
+    }*/
 
     private void windowPadding(){
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

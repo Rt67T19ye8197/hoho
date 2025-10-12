@@ -21,7 +21,7 @@ public class MainActivity2 extends AppCompatActivity {
     //ОСНОВНОЕ ОКНО С КАРТОЧКАМИ
 
     TextView lvl, world, trans, text, textTrans, textProm;
-    View buttonCat, buttonLvl, buttonCheck, buttonLng, buttonPlay, buttonMenu;
+    View buttonTeg, buttonLvl, buttonCheck, buttonLng, buttonPlay, buttonMenu;
     ImageView imageView;
 
     @Override
@@ -37,7 +37,7 @@ public class MainActivity2 extends AppCompatActivity {
         textTrans = findViewById(R.id.textView5);
         textProm = findViewById(R.id.textView6);
 
-        buttonCat = findViewById(R.id.cat);
+        buttonTeg = findViewById(R.id.teg);
         buttonLvl = findViewById(R.id.lvl);
         buttonCheck = findViewById(R.id.check);
         buttonLng = findViewById(R.id.lng);
@@ -62,21 +62,24 @@ public class MainActivity2 extends AppCompatActivity {
         assert item != null;
         lvl.setText(item.getLLA());
         world.setText(item.getWorld());
-        trans.setText(item.getTrans());
+        trans.setText(String.format("%s %s", item.getTrans(), item.getPron()));
+        text.setText(item.getText());
+        textTrans.setText(item.getTextTrans());
+        textProm.setText(item.getTextPron());
         Log.d("MyLOG", "TEXT");
 
         //////IMAGE\\\\\\
         //resDrawable(item.getWorld(), imageView);
         imageView.setImageResource(resDrawable(item.getWorld()));
-        buttonCat.setBackgroundResource(resDrawable(item.getWorld()));
-        buttonLvl.setBackgroundResource(resDrawable(item.getWorld()));
-        buttonLng.setBackgroundResource(resDrawable(item.getWorld()));
+        buttonTeg.setBackgroundResource(resDrawable(item.getTeg()));
+        buttonLvl.setBackgroundResource(resDrawable(item.getLvl()));
+        buttonLng.setBackgroundResource(resDrawable(item.getLng()));
         Log.d("MyLOG", "TEXT");
         if(item.isCheck()){
             buttonCheck.setBackgroundResource(resDrawable("check"));
         }
         Log.d("MyLOG", "TEXT");
-        buttonCat.setOnClickListener((v -> onClick("nnnn")));
+        //buttonTeg.setOnClickListener((v -> onClick("nnnn")));
         Log.d("MyLOG", "TEXT");
     }
 

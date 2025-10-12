@@ -53,32 +53,22 @@ public class ItemDao {
      * 🔹 Универсальный поиск по нескольким условиям
      * Пример: filters.put("name", "cat"); filters.put("flag", "1");
      */
-    public List<Item> searchItems(Map<String, String> filters) {
+    public List<Item> searchItems(Map<DatabaseContract, String> filters) {
         // Собираем WHERE-условие
         StringBuilder whereClause = new StringBuilder();
         List<String> whereArgsList = new ArrayList<>();
-
-        for (Map.Entry<String, String> entry : filters.entrySet()) {
+        for (Map.Entry<DatabaseContract, String> entry : filters.entrySet()) {
             if (whereClause.length() > 0) {
-                whereClause.append(" AND ");
+                whereClause.append(" OR ");
             }
-            // для текстовых полей используем LIKE, для числовых - "="
-            if (entry.getKey().equals(DatabaseContract.CHECK.getColumnName())) {
-                whereClause.append(entry.getKey()).append(" = ?");
-                whereArgsList.add(entry.getValue());
-            } else {
-                whereClause.append(entry.getKey()).append(" LIKE ?");
-                whereArgsList.add("%" + entry.getValue() + "%");
-            }
+            whereClause.append(entry.getKey().getColumnName()).append(" LIKE ?");
+            whereArgsList.add("%" + entry.getValue() + "%");
         }
-
         String[] whereArgs = whereArgsList.toArray(new String[0]);
-
         List<Item> list = new ArrayList<>();
         try (SQLiteDatabase db = dbHelper.getReadableDatabase();
              Cursor cursor = db.query( DatabaseContract.TABLE_NAME, null, whereClause.length() > 0 ? whereClause.toString() : null,
                      whereArgs, null, null, null)) {
-
             while (cursor.moveToNext()) {
                 list.add(parseItem(cursor));
             }

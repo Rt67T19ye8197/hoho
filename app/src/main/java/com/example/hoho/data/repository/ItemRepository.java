@@ -7,6 +7,7 @@ import com.example.hoho.data.contract.DatabaseContract;
 import com.example.hoho.data.entities.Item;
 
 import java.util.List;
+import java.util.Map;
 
 public class ItemRepository {
     private final ItemDao itemDao;
@@ -14,15 +15,14 @@ public class ItemRepository {
     public ItemRepository(Context context) {
         itemDao = new ItemDao(context);
     }
-
     public List<Item> getItems() {
         return itemDao.getAllItems();
     }
-
-    /*public Item getItem(int id) {
-        return itemDao.getItemById(id);
-    }*/
     public List<Item> search(DatabaseContract selection, String query) {
         return itemDao.searchItems(selection, query);
+    }
+
+    public List<Item> search(Map<DatabaseContract, String> selection) {
+        return itemDao.searchItems(selection);
     }
 }
